@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useContext} from 'react';
+import { CountContext, CountContextProvider } from './CountReducer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>use-context & use-reducer sample</h1>
+      <CountContextProvider>
+        <Test/>
+      </CountContextProvider>
     </div>
   );
 }
 
 export default App;
+
+const Test = () => {
+  const countContext = useContext(CountContext)
+
+  const {state, dispatch} = countContext
+
+  return (
+    <>
+      <h2>Test Component</h2>
+      <div>count: {state.count}</div>
+      <button onClick={ () => dispatch({ type: 'increment' }) }>plus</button>
+    </>
+  );
+}
